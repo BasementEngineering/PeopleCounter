@@ -2,28 +2,28 @@
 #include <ESP8266mDNS.h>
 #include <WiFiUdp.h>
 
-#include "config.h"
+#include "Config.h"
+#include "errorCodes.h";
 
 #include "webUi.h"
-#include "Sensor.h"
+#include "TofSensor.h"
 #include "PeopleCounter.h"
-
-#include "errorCodes.h"
 
 const char* ssid = STASSID;
 const char* password = STAPSK;
 
 #define ENABLE_DEBUG
 
-Sensor myTofSensor;
+TofSensor myTofSensor;
 PeopleCounter peopleCounter;
 
 void blinkLed(int times, int interval = 500);
 
 void setup() {  
   #ifdef ENABLE_DEBUG
-  delay(5000);
   Serial.begin(115200);
+  Serial.println("Setup starting");
+  delay(5000);
   #endif
   pinMode(LED_BUILTIN,OUTPUT);
 

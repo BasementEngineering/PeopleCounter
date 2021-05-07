@@ -1,6 +1,6 @@
 #include "peopleCounter.h"
 #include "config.h"
-
+#include "Arduino.h"
 #include "errorCodes.h"
 
 enum zoneNames{ZONE1 = 0, ZONE2 = 1};
@@ -48,13 +48,25 @@ int PeopleCounter::update(){
     prevInside = inside;
     prevZ1 = Z1;
     prevZ2 = Z2;
-    return OK;
+    return RESULT_OK;
  }
 }
 
 int PeopleCounter::getCount(){
     return count;
   }
+
+void PeopleCounter::setCount(int value){
+  count = value;
+}
+
+int PeopleCounter::getLimit(){
+  return limit;
+}
+
+void PeopleCounter::setLimit(int value){
+  limit = value;
+}
 
 int PeopleCounter::getSingleZoneEvent(bool prevState,bool currentState){
   if(prevState == currentState){

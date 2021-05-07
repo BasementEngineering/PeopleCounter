@@ -12,10 +12,28 @@
 ESP8266WebServer server(80);
 WebSocketsServer socketServer = WebSocketsServer(81);
 
-PeopleCounter* _peopleCounter;
+PeopleCounter* myPeopleCounter;
 
 void handleRoot() {
-    server.send(200, "text/html", homepageFirstPart);
+    server.send(200, "text/html", homepage);
+}
+
+void handleCorrection(){
+  server.send(200, "text/html", correctionForm);
+}
+
+void handleSetParameters(){
+  int newCount = String(server.arg("count")).toInt();
+  int newLimit = String(server.arg("limit")).toInt();
+
+  if(newCount > -1){
+    myPeopleCounter->setCount(newCount);
+  }
+  if( newLimit > -1){
+    myPeopleCounter->setLimit(newLimit);
+  }
+  
+  handleCorrection();
 }
 
 void handleNotFound() {
@@ -33,21 +51,24 @@ void handleNotFound() {
   server.send(404, "text/plain", message);
 }
 
+void handleLimit(){
+  server.send(200, "text/plain", String( myPeopleCounter->getLimit() ));
+}
+
 void updateCounter(){
   String count;
-  int value = _peopleCounter->getCount();
+  int value = myPeopleCounter->getCount();
   count = String( value );
-  
   server.send(200, "text/plain", count );
 }
 
 void setupWebUi(PeopleCounter* peopleCounter) {
-  _peopleCounter = peopleCounter;
+  myPeopleCounter = peopleCounter;
   server.on("/", handleRoot);
   server.on("/count", updateCounter );
-  server.on("/limit", []() {
-    server.send(200, "text/plain", String(PEOPLE_LIMIT));
-  });
+  server.on("/correction",handleCorrection);
+  server.on("/setParameters",handleSetParameters);
+  server.on("/limit", handleLimit);
 
   server.onNotFound(handleNotFound);
 
@@ -76,12 +97,10 @@ void startWebsocket() { // Start a WebSocket server
   socketServer.onEvent(webSocketEvent);          // if there's an incomming websocket message, go to function 'webSocketEvent'
 }
 
-
-
 int lastCount = 0;
 void updateWebsocket(){
     socketServer.loop();
-    int count = _peopleCounter->getCount();
+    int count = myPeopleCounter->getCount();
     if(count != lastCount){
       String countMsg = String(count);
       socketServer.broadcastTXT(countMsg);

@@ -2,6 +2,7 @@
 #define PEOPLE_COUNTER_H
 
 #include "Sensor.h"
+#include "config.h"
 
 class PeopleCounter{
   public:
@@ -9,13 +10,14 @@ class PeopleCounter{
     void setSensor(Sensor* sensor);
     int update();
     int getCount();
-    void reset();
-    void setCount();
-    void setLimit();
+    int getLimit();
+    void setCount(int value);
+    void setLimit(int value);
 
   private: 
-    Sensor* mySensor =NULL;
+    Sensor* mySensor;
     int count = 0;
+    int limit = PEOPLE_LIMIT;
     
     bool prevZ1 = false;
     bool prevZ2 = false;
