@@ -17,17 +17,12 @@ void PeopleCounter::setSensor(Sensor* sensor){
 int PeopleCounter::update(){
   
   if(mySensor->dataAvailable()){
-    //Serial.println("Data Available");
     int Z1,Z2,inside;
+    
     Z1=mySensor->getZone1();
     Z2=mySensor->getZone2();
     inside = Z1 || Z2;
 
-    /*Serial.print("Z1 "); Serial.println(Z1);
-    Serial.print("Z2 "); Serial.println(Z2);
-    Serial.print("Z1||Z2 "); Serial.println(inside);
-    delay(2000);*/
-    
     if( !prevInside && inside ){
        int event = getGlobalEvent(Z1,Z2);
        if(event < 0){
@@ -42,6 +37,11 @@ int PeopleCounter::update(){
        }
       exit = event;
       int result = evaluate(entry,exit);
+      
+      #ifdef MOUNTED_INSIDE
+      result=-result;
+      #endif
+      
       count += result;
     }
 

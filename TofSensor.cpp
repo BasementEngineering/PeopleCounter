@@ -13,7 +13,7 @@ Sensor(),myTofSensor()
 {}
 
 void TofSensor::setup(){
-      Wire.begin(4,5);//SDA,SCL
+      Wire.begin(4,5);//SDA,SCL //WEMOS Labels: D2,D1
       delay(100);
       if(myTofSensor.begin() != 0){
         Serial.println("Sensor error");

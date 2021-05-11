@@ -1,20 +1,15 @@
 #ifndef CONFIG_H
 #define CONFIG_H
 
-#define PEOPLE_LIMIT 100
-#define FLIP_DIRECTION
+#define DEFAULT_PEOPLE_LIMIT 5
+#define MOUNTED_INSIDE
 
 /***   WiFi   ***/
-//#define STASSID "IAmSpeed"
-//#define STAPSK  "31912801324415008833"
-//#define STASSID "PeopleCounter"
-//#define STAPSK  "Password"
-//#define AP_MODE
-
-#define STASSID "DampfmaschineOnSpeed"
-#define STAPSK  "ImFastAsFuckB0i"
+//#define AP_MODE Does not work reliably
+#define STASSID "PeopleCounter"
+#define STAPSK  "Password"
 
 /***   Debugging Mode   ***/
-#define DEBUG_COUNTER
+//#define DEBUG_COUNTER
 
 #endif

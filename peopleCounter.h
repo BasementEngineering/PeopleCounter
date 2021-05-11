@@ -17,7 +17,7 @@ class PeopleCounter{
   private: 
     Sensor* mySensor;
     int count = 0;
-    int limit = PEOPLE_LIMIT;
+    int limit = DEFAULT_PEOPLE_LIMIT;
     
     bool prevZ1 = false;
     bool prevZ2 = false;

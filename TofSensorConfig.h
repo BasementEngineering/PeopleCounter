@@ -3,12 +3,12 @@
 
 /***   Mounting Parameters   ***/
 #define PERSON_THRESHOLD 1200
-#define DOOR_THRESHOLD 100
+//#define DOOR_THRESHOLD 100 Not implemented
 
 /***   Debugging   ***/
 //#define ENABLE_DEBUG
 
-#define SENSOR_TIMEOUT 500
+//#define SENSOR_TIMEOUT 500 Not used
 
 #define zoneX 15
 #define zoneY 8
